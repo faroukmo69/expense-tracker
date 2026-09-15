@@ -1,8 +1,29 @@
 {
-  "expenses": [
-    { "id": 1, "amount": 45.5,  "category": "Food",          "date": "2026-08-01", "note": "Weekly groceries" },
-    { "id": 2, "amount": 150,   "category": "Transport",     "date": "2026-08-05", "note": "Fuel" },
-    { "id": 3, "amount": 15.99, "category": "Entertainment", "date": "2026-08-10", "note": "Movie night" },
-    { "id": 4, "amount": 89.9,  "category": "Bills",         "date": "2026-08-12", "note": "Electricity" }
-  ]
+  "name": "expense-tracker",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/cli": "^22.0.0",
+    "@angular/build": "^22.0.0",
+    "@types/jasmine": "~5.1.0",
+    "typescript": "~5.9.2"
+  }
 }

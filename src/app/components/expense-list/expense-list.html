@@ -1,0 +1,87 @@
+<section class="expense-list">
+  <h2>📋 My Expenses</h2>
+
+  <div class="controls">
+    <label>
+      Category
+      <select [value]="category()" (change)="category.set($any($event.target).value)">
+        @for (option of categories; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Search
+      <input type="text" placeholder="Search notes…"
+             [value]="search()"
+             (input)="search.set($any($event.target).value)" />
+    </label>
+
+    <label>
+      Sort by
+      <select [value]="sortBy()" (change)="sortBy.set($any($event.target).value)">
+        <option value="date">Date</option>
+        <option value="amount">Amount</option>
+      </select>
+    </label>
+
+    <label>
+      Direction
+      <select [value]="sortDir()" (change)="sortDir.set($any($event.target).value)">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </label>
+
+    <label>
+      Highlight over
+      <input type="number" min="1"
+             [value]="threshold()"
+             (input)="onThresholdInput($event)" />
+    </label>
+  </div>
+
+  @if (subtotals().length) {
+    <div class="subtotals">
+      @for (item of subtotals(); track item.category) {
+        <span class="subtotal-chip">
+          {{ item.category | categoryIcon }}: {{ item.sum | currency }}
+        </span>
+      }
+    </div>
+  }
+
+  @if (expenseService.loading()) {
+    <p class="status">Loading expenses…</p>
+  } @else if (expenseService.error()) {
+    <p class="error-banner">{{ expenseService.error() }}</p>
+  } @else if (expenseService.expenses().length === 0) {
+    <p class="empty">No expenses yet — add your first one above.</p>
+  } @else if (filteredExpenses().length === 0) {
+    <p class="empty">No expenses match your filters.</p>
+  } @else {
+    <p class="total">Total: {{ total() | currency }} <span class="count">({{ filteredExpenses().length }} expenses)</span></p>
+
+    <ul class="list">
+      @for (expense of pagedExpenses(); track expense.id) {
+        <li class="item" [appHighlightOverBudget]="expense.amount" [threshold]="threshold()">
+          <span class="category">{{ expense.category | categoryIcon }}</span>
+          <span class="amount">{{ expense.amount | currency }}</span>
+          <span class="date">{{ expense.date }}</span>
+          <span class="note">{{ expense.note }}</span>
+          <span class="row-actions">
+            <button type="button" (click)="editExpense(expense)">Edit</button>
+            <button type="button" class="danger" (click)="deleteExpense(expense)">Delete</button>
+          </span>
+        </li>
+      }
+    </ul>
+
+    @if (hasMore()) {
+      <button type="button" class="secondary load-more" (click)="loadMore()">
+        Load More ({{ filteredExpenses().length - visibleCount() }} remaining)
+      </button>
+    }
+  }
+</section>

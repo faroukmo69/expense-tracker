@@ -1,0 +1,44 @@
+.expense-form {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: 4px solid #1a1a2e;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
+}
+
+h2 { margin: 0 0 15px; color: #1a1a2e; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.span-2 { grid-column: span 2; }
+
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-weight: bold; font-size: 13px; }
+.field input, .field select { width: 100%; }
+
+.error {
+  color: #dc2626;
+  font-size: 12px;
+  margin: 0;
+}
+
+.actions { display: flex; gap: 10px; margin-top: 16px; }
+
+@media (max-width: 550px) {
+  .grid { grid-template-columns: 1fr; }
+  .span-2 { grid-column: span 1; }
+}
+.feedback {
+  margin: 14px 0 0;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  background: #eef9f0;
+  border: 1px solid #a5d6a7;
+  color: #1b5e20;
+}

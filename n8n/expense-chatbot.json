@@ -1,0 +1,121 @@
+{
+  "name": "expense-chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "expense-tracker-chatbot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2afc23f8-373f-4d57-83d0-ab5caee671d3",
+      "name": "Webhook",
+      "webhookId": "ebb7ebdc-04b6-43fe-bda5-4f0e57609536"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {
+          "systemMessage": "=You are a helpful assistant for the user's expense tracker.\n\nHere is the user's current expense data (JSON):\n{{ JSON.stringify($json.body.expenses) }}\n\nRules:\n- Answer ONLY based on the expense data above. Never invent values or amounts.\n- Each expense has: amount, category, date, and an optional note.\n- You can help with: total spending, spending by category, the largest or smallest expense, expenses in a date range, and summarizing recent spending.\n- If the answer cannot be determined from the data, say clearly that you cannot answer reliably.\n- Keep answers short and clear."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9e2dd992-b6c5-4ea9-9c60-f1772072623b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        96,
+        208
+      ],
+      "id": "b0067dd1-5ea5-47fa-8dfa-f536161b6074",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ltN7vTFxwaD67GsG",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        592,
+        0
+      ],
+      "id": "a891021d-2ce9-4db3-b6c5-79d2658bfdb0",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "358ba07b-eccb-4bb5-9073-cb7688d351a4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f0d4d1325209505697c12171e6945571dfb6ddafe8b18e82b3988131fc0ebf50"
+  },
+  "nodeGroups": [],
+  "id": "0Wu9MidF3Z66YB0g",
+  "tags": []
+}

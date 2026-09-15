@@ -1,0 +1,136 @@
+.expense-list {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: 4px solid #3f51b5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
+}
+
+h2 {
+  margin: 0 0 15px;
+  color: #1a1a2e;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  background: #f4f6fa;
+  border: 1px solid #e0e4ec;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #555;
+}
+.controls select,
+.controls input {
+  width: 100%;
+  min-width: 0;
+}
+
+.subtotals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.subtotal-chip {
+  background: #eef2fa;
+  border: 1px solid #d0d8ea;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12.5px;
+  font-weight: bold;
+  color: #1a1a2e;
+}
+
+.total {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1b5e20;
+  background: #eef9f0;
+  border: 1px solid #a5d6a7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0 0 14px;
+}
+.count {
+  font-size: 13px;
+  font-weight: normal;
+  color: #4b6b50;
+}
+
+.status {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+.empty {
+  color: #777;
+  text-align: center;
+  padding: 25px;
+  background: #f9fafc;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 150px 100px 110px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  border: 1px solid #e0e4ec;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #fff;
+}
+
+.category { font-weight: bold; }
+.amount { font-weight: bold; color: #1a1a2e; }
+.date { color: #666; font-size: 13px; }
+.note { color: #666; font-size: 13px; }
+
+.row-actions { display: flex; gap: 6px; }
+.row-actions button { padding: 6px 12px; font-size: 13px; }
+
+.load-more {
+  display: block;
+  margin: 12px auto 0;
+}
+
+@media (max-width: 800px) {
+  .controls { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .item { grid-template-columns: 1fr 1fr; }
+  .note { display: none; }
+  .controls { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,28 @@
+<section class="chatbot">
+  <h2>Expense Assistant</h2>
+
+  <div class="messages">
+    @for (message of messages(); track $index) {
+      @if (message.from === 'user') {
+        <p class="message user">{{ message.text }}</p>
+      } @else {
+        <p class="message agent" [innerHTML]="formatAgentMessage(message.text)"></p>
+      }
+    }
+    @if (loading()) {
+      <p class="message agent loading">Thinking…</p>
+    }
+  </div>
+
+  <div class="composer">
+    <input type="text"
+           placeholder="Ask about your expenses…"
+           [value]="draft()"
+           (input)="draft.set($any($event.target).value)"
+           (keyup.enter)="send()"
+           [disabled]="loading()" />
+    <button type="button" (click)="send()" [disabled]="loading() || draft().trim() === ''">
+      Send
+    </button>
+  </div>
+</section>

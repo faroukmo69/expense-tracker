@@ -1,0 +1,29 @@
+{
+  "expenses": [
+    {
+      "amount": 100,
+      "category": "Shopping",
+      "date": "2026-08-30",
+      "id": "913y02a231w"
+    },
+    {
+      "amount": 5000,
+      "category": "Entertainment",
+      "date": "2026-09-01",
+      "id": "AFo2DbXs1Ic"
+    },
+    {
+      "amount": 555,
+      "category": "Bills",
+      "date": "2026-09-05",
+      "id": "TviwSgiSjUQ"
+    },
+    {
+      "amount": 20,
+      "category": "Bills",
+      "date": "2026-09-02",
+      "id": "b8N7HtAcRqM"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

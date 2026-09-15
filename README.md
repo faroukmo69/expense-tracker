@@ -1,59 +1,65 @@
-# ExpenseTracker
+# Expense Tracker (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.7.
+A small expense tracker backed by a local REST API (json-server) with full create / edit / delete support and an AI chatbot connected to an n8n agent.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Add / edit / delete expenses (Reactive Form + custom future-date validator)
+- Filter by category, search notes, sort by date or amount (signals + computed)
+- Custom pipe (category icons) and custom attribute directive (highlight over budget)
+- Running total of the currently visible (filtered) expenses, formatted as currency
+- AI chatbot connected to an n8n AI Agent workflow (answers from your expense data)
+- Bonus: loading/error states, per-category subtotals, adjustable highlight threshold, load more
 
-```bash
-ng serve
-```
+## Prerequisites
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Node.js + npm
+- Angular CLI: `npm i -g @angular/cli`
+- json-server: `npm install -g json-server`
 
-## Code scaffolding
+## Run
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. **Terminal 1** — start the local API:
+   ```
+   json-server --watch db.json --port 3000
+   ```
+2. **Terminal 2** — start the app:
+   ```
+   ng serve
+   ```
+3. Open [http://localhost:4200](http://localhost:4200)
 
-```bash
-ng generate component component-name
-```
+## AI Chatbot (n8n)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The chatbot sends the user's message + the current expenses to an n8n AI Agent workflow (Webhook → AI Agent → Google Gemini Chat Model) and shows the answer.
 
-```bash
-ng generate --help
-```
+The workflow file is included in this repo: `n8n/expense-chatbot.json`
 
-## Building
+To run the chatbot with your own n8n account:
 
-To build the project run:
+1. Create a free account at [https://www.n8n.io](https://www.n8n.io)
+2. Import the workflow: create a new workflow → menu (⋯) → Import from File → select `n8n/expense-chatbot.json`
+3. Open the Google Gemini Chat Model node and connect your own credential (a free API key from [https://aistudio.google.com](https://aistudio.google.com))
+4. Click **Publish** to activate the workflow
+5. Copy the Production URL from the Webhook node and put it in `src/environments/environment.development.ts`:
+   ```
+   aiAgentWebhookUrl: 'YOUR_PRODUCTION_WEBHOOK_URL'
+   ```
 
-```bash
-ng build
-```
+### Request / response contract used by the app
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **Request:**
+  ```json
+  { "message": "...", "sessionId": "...", "expenses": [...] }
+  ```
+- **Response:**
+  ```json
+  { "output": "..." }
+  ```
 
-## Running unit tests
+If the workflow is unavailable, the chatbot shows a friendly error message and the rest of the app keeps working normally.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Notes
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `db.json` contains sample expenses — feel free to edit it.
+- Keep json-server running in a separate terminal alongside `ng serve`.
